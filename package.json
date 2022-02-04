@@ -1,0 +1,29 @@
+{
+  "name": "naiofy",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "artillery": "^2.0.0-10",
+    "faker": "^4.1.0"
+  },
+  "dependencies": {
+    "ansi-styles": "^4.3.0",
+    "chalk": "^4.1.2",
+    "codigo": "^1.0.0",
+    "color-convert": "^2.0.1",
+    "color-name": "^1.1.4",
+    "debug": "^4.3.3",
+    "faker-br": "^0.4.1",
+    "has-flag": "^4.0.0",
+    "lodash": "^4.17.21",
+    "ms": "^2.1.2",
+    "supports-color": "^7.2.0"
+  },
+  "description": ""
+}
