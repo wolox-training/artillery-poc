@@ -1,0 +1,79 @@
+config:
+  target: 'https://nodejs-qa-training.herokuapp.com'
+  processor: "helpers/register.js"
+  phases:
+    - duration: 15
+      arrivalRate: 1
+  plugins:
+    expect: {}
+  defaults:
+    headers:
+      Authorization: '{{token}}'
+         
+scenarios:
+  - name: "Create an user"
+    flow:
+      - function: "generateRandomData"
+      - post:
+          url: "/users"
+          json:
+            firstName: "{{ firstName }}"
+            lastName: "{{ lastName }}"
+            email: "{{ email }}"
+            password: "{{ password }}"
+          capture:
+            json: "$.user_id"
+            as: "userId"     
+          strict: false
+      - log: "user id {{userId}}"
+
+      - post:
+          url: "/users/sessions"
+          json:
+            email: "{{ email }}"
+            password: "{{ password }}"
+          capture:
+            header: "Authorization"
+            as: "token"
+          strict: false
+          expect:
+            - statusCode: 200
+      - log: "token {{ token }}"
+
+  -  name: "User's list"
+     flow:
+      - get:
+          url: "/users"
+          expect:
+            - statusCode: 200
+
+  -  name: "Album's list"
+     flow:
+      - get:
+          url: "/albums"
+          expect:
+            - statusCode: 200
+
+  -  name: "Album photos list"
+     flow:
+      - function: "generateRandomData"
+      - get:
+          url: "/albums/{{ idAlbum }}/photos"
+          expect:
+            - statusCode: 200
+      - log: "response= {{token}}"
+
+  -  name: "User Albums"
+     flow:
+      - get:
+          url: "/users/{{ userId }}/albums"
+          expect:
+            - statusCode: 200
+
+  -  name: "Buy Album"
+     flow:
+      - function: "generateRandomData"
+      - get:
+          url: "/albums/{{ buyAlbum }}"
+          expect:
+            - statusCode: 200
